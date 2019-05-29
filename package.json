@@ -1,0 +1,53 @@
+{
+	"name": "exercism",
+	"displayName": "exercism",
+	"description": "Exercism integration",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.34.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.exercism.fetch",
+		"onCommand:extension.exercism.open"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.exercism.fetch",
+				"title": "Exercism: Fetch exercise"
+			},
+			{
+				"command": "extension.exercism.open",
+				"title": "Exercism: open current exercise"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Exercism configuration",
+			"properties": {
+				"exercism.app.path": {
+					"type": "string",
+					"description": "exercism client app path"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28",
+		"tslint": "^5.12.1",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42"
+	}
+}
