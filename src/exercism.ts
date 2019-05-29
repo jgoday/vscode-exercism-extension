@@ -1,4 +1,4 @@
-import { fileExists, getUserHome } from './file-utils';
+import { fileExists, getUserHome, resolvePath } from './file-utils';
 import { executeProgramR, executeProgram } from './exec-utils';
 
 export interface IEnviroment {
@@ -23,7 +23,8 @@ export class Reader<T> {
 export const getExercismAppPath = async (conf: IEnviroment) => {
     const exercismApp = conf.get<string>('app.path');
     if (!exercismApp) {
-        const apppath = await conf.ask('Exercism client app not found. Please, enter full path: ');
+        const res = await conf.ask('Exercism client app not found. Please, enter full path: ');
+        const apppath = resolvePath(res);
         const isValid = await fileExists(apppath || 'notvalid');
 
         if (isValid) {

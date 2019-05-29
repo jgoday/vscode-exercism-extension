@@ -48,6 +48,35 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
+	const submitCommand = vscode.commands.registerCommand('extension.exercism.submit', async () => {
+		const exercismApp = await env.run(getExercismAppPath);
+		if (exercismApp && await env.run(ensureToken, exercismApp)) {
+			const currentWorkspace = (vscode.workspace.workspaceFolders || [])
+				.filter(w => env.run(workspaceHasExercismMetadata, w.uri.fsPath));
+
+			if (currentWorkspace.length >= 1 && vscode.window.activeTextEditor) {
+				const currentFile = vscode.window.activeTextEditor.document.uri.fsPath;
+
+				vscode.window.withProgress({
+					location: vscode.ProgressLocation.Notification,
+					title: `Submiting exercise ${vscode.window.activeTextEditor.document.fileName}`
+				}, async (progress) => {
+					await sleep(1000);
+					try {
+						const [res, _] = await executeProgramR(`${exercismApp} submit ${currentFile}`);
+						vscode.window.showInformationMessage('Exercise submited: ' + res);
+					}
+					catch (e) {
+						vscode.window.showErrorMessage(e);
+					}
+				});
+			}
+			else {
+				vscode.window.showInformationMessage('Current workspace is not a valid exercism folder.');
+			}
+		}
+	});
+
 	const openCommand = vscode.commands.registerCommand('extension.exercism.open', async () => {
 		const exercismApp = await env.run(getExercismAppPath);
 		if (exercismApp && await env.run(ensureToken, exercismApp)) {
@@ -64,6 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	context.subscriptions.push(fetchCommand);
+	context.subscriptions.push(submitCommand);
 	context.subscriptions.push(openCommand);
 }
 

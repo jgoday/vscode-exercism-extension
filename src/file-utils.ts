@@ -1,4 +1,7 @@
 import * as fs from 'fs';
+import * as path from 'path';
+import { homedir } from 'os';
+import { O_SYMLINK } from 'constants';
 
 export const fileExistsSync = fs.existsSync;
 
@@ -10,4 +13,13 @@ export const fileExists = (filepath: string) => {
 
 export const getUserHome = () => {
 	return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+}
+
+export const resolvePath = (relativePath: string) => {
+	if (relativePath && relativePath.startsWith('~')) {
+		return path.join(homedir(), relativePath.substring(1));
+	}
+	else {
+		return path.resolve(relativePath);
+	}
 }

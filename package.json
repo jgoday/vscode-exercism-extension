@@ -3,6 +3,13 @@
 	"displayName": "exercism",
 	"description": "Exercism integration",
 	"version": "0.0.1",
+	"publisher": "jgoday",
+  	"icon": "images/exercism.png",
+  	"homepage": "https://github.com/jgoday/vscode-exercism-extension/blob/master/README.md",
+  	"repository": {
+    	  "type": "git",
+      	"url": "https://github.com/jgoday/vscode-exercism-extension.git"
+  	},
 	"engines": {
 		"vscode": "^1.34.0"
 	},
@@ -11,7 +18,8 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.exercism.fetch",
-		"onCommand:extension.exercism.open"
+		"onCommand:extension.exercism.open",
+		"onCommand:extension.exercism.submit"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -21,8 +29,12 @@
 				"title": "Exercism: Fetch exercise"
 			},
 			{
+				"command": "extension.exercism.submit",
+				"title": "Exercism: Submit current exercise"
+			},
+			{
 				"command": "extension.exercism.open",
-				"title": "Exercism: open current exercise"
+				"title": "Exercism: Open current exercise"
 			}
 		],
 		"configuration": {
