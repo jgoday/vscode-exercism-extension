@@ -2,14 +2,14 @@
 	"name": "exercism",
 	"displayName": "exercism",
 	"description": "Exercism integration",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "jgoday",
-  	"icon": "images/exercism.png",
-  	"homepage": "https://github.com/jgoday/vscode-exercism-extension/blob/master/README.md",
-  	"repository": {
-    	  "type": "git",
-      	"url": "https://github.com/jgoday/vscode-exercism-extension.git"
-  	},
+	"icon": "images/exercism.png",
+	"homepage": "https://github.com/jgoday/vscode-exercism-extension/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jgoday/vscode-exercism-extension.git"
+	},
 	"engines": {
 		"vscode": "^1.34.0"
 	},
@@ -56,10 +56,10 @@
 		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28",
-		"tslint": "^5.12.1",
+		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
-		"@types/mocha": "^2.2.42"
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28"
 	}
 }

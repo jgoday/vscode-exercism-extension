@@ -1,5 +1,5 @@
-import { fileExists, getUserHome, resolvePath } from './file-utils';
-import { executeProgramR, executeProgram } from './exec-utils';
+import { fileExists, getUserHome, resolvePath, programExistsInPath } from './file-utils';
+import { executeProgramR, executeProgram, isWindows } from './exec-utils';
 
 export interface IEnviroment {
     get: <T>(name: string) => T | undefined;
@@ -23,17 +23,28 @@ export class Reader<T> {
 export const getExercismAppPath = async (conf: IEnviroment) => {
     const exercismApp = conf.get<string>('app.path');
     if (!exercismApp) {
-        const res = await conf.ask('Exercism client app not found. Please, enter full path: ');
-        const apppath = resolvePath(res);
-        const isValid = await fileExists(apppath || 'notvalid');
+        // search in current path
+        const defaultAppName = isWindows
+            ? 'exercism.exe'
+            : 'exercism';
+        const defaultAppPath = await programExistsInPath(defaultAppName);
 
-        if (isValid) {
-            conf.set('app.path', apppath);
-            return apppath;
+        if (defaultAppPath) {
+            return defaultAppName;
         }
         else {
-            conf.showError(`'${apppath}' is not a valid path`);
-            return undefined;
+            const res = await conf.ask('Exercism client app not found. Please, enter full path: ');
+            const apppath = resolvePath(res);
+            const isValid = await fileExists(apppath || 'notvalid');
+
+            if (isValid) {
+                conf.set('app.path', apppath);
+                return apppath;
+            }
+            else {
+                conf.showError(`'${apppath}' is not a valid path`);
+                return undefined;
+            }
         }
     }
     else {
@@ -65,7 +76,7 @@ export const requestToken = async (env: IEnviroment, apppath: string) => {
         'Exercism client is not configured. Please, insert your client token.');
 
 	const home = getUserHome();
-	const r = await executeProgram(`${apppath} configure -t ${token} -w ${home}`);
+	const r = await executeProgram(`${apppath} configure -t ${token} -w ${home}/Exercism`);
 	return r;
 }
 

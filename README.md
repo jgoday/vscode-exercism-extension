@@ -29,7 +29,12 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.2
+
+Search exercism program on current path.
+
 ### 0.0.1
 
 Initial release
+
 

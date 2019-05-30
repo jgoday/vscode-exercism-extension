@@ -19,6 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
 		showError: (error: string) => vscode.window.showErrorMessage(error)
 	});
 
+
 	const fetchCommand = vscode.commands.registerCommand('extension.exercism.fetch', async () => {
 		const exercismApp = await env.run(getExercismAppPath);
 

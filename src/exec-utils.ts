@@ -1,4 +1,8 @@
 import {exec} from 'child_process';
+import * as os from 'os';
+
+export const isWindows = () =>
+    os.platform().indexOf('win') >= 0;
 
 export const sleep = async (msecs: number) =>
 	await new Promise((resolve) => {

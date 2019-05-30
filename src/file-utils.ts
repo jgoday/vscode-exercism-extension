@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { homedir } from 'os';
-import { O_SYMLINK } from 'constants';
+import { executeProgramR, isWindows } from './exec-utils';
 
 export const fileExistsSync = fs.existsSync;
 
@@ -22,4 +22,13 @@ export const resolvePath = (relativePath: string) => {
 	else {
 		return path.resolve(relativePath);
 	}
+}
+
+export const programExistsInPath = async (programName: string) => {
+	const finder = isWindows()
+		? 'where.exe'
+		: 'which';
+	const [out, _] = await executeProgramR(`${finder} ${programName}`);
+
+	return out ? out.split('\n')[0].trim() : undefined;
 }
