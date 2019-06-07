@@ -8,12 +8,12 @@ export const fileExistsSync = fs.existsSync;
 export const fileExists = (filepath: string) => {
 	return new Promise<boolean>((resolve, _) => {
 		fs.exists(filepath, resolve);
-	})
-}
+	});
+};
 
 export const getUserHome = () => {
-	return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-}
+	return process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+};
 
 export const resolvePath = (relativePath: string) => {
 	if (relativePath && relativePath.startsWith('~')) {
@@ -22,7 +22,7 @@ export const resolvePath = (relativePath: string) => {
 	else {
 		return path.resolve(relativePath);
 	}
-}
+};
 
 export const programExistsInPath = async (programName: string) => {
 	const finder = isWindows()

@@ -19,6 +19,24 @@ export function activate(context: vscode.ExtensionContext) {
 		showError: (error: string) => vscode.window.showErrorMessage(error)
 	});
 
+	const updateContext = () => {
+		try {
+			const currentWorkspaces = (vscode.workspace.workspaceFolders || [])
+				.filter(w => env.run(workspaceHasExercismMetadata, w.uri.fsPath));
+			const showButtons = vscode.workspace.getConfiguration('exercism').get('showButtons', true);
+			vscode.commands.executeCommand(
+				'setContext',
+				'exercism:showButtons',
+				showButtons);
+			vscode.commands.executeCommand(
+				'setContext',
+				'exercism:isValidWorkspace',
+				currentWorkspaces.length > 0 && showButtons);
+		}
+		catch (e) {
+			console.log(e);
+		}
+	};
 
 	const fetchCommand = vscode.commands.registerCommand('extension.exercism.fetch', async () => {
 		const exercismApp = await env.run(getExercismAppPath);
@@ -93,9 +111,21 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
+	vscode.workspace.onDidChangeWorkspaceFolders(_ => {
+		updateContext();
+	});
+	vscode.workspace.onDidChangeConfiguration(_ => {
+		updateContext();
+	});
+	vscode.workspace.onDidOpenTextDocument(_ => {
+		updateContext();
+	});
+
 	context.subscriptions.push(fetchCommand);
 	context.subscriptions.push(submitCommand);
 	context.subscriptions.push(openCommand);
+
+	updateContext();
 }
 
 export function deactivate() {}

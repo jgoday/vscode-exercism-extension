@@ -17,6 +17,7 @@
 		"Other"
 	],
 	"activationEvents": [
+		"*",
 		"onCommand:extension.exercism.fetch",
 		"onCommand:extension.exercism.open",
 		"onCommand:extension.exercism.submit"
@@ -26,11 +27,19 @@
 		"commands": [
 			{
 				"command": "extension.exercism.fetch",
-				"title": "Exercism: Fetch exercise"
+				"title": "Exercism: Fetch exercise",
+				"icon": {
+					"light": "./media/download-light.svg",
+					"dark": "./media/download-dark.svg"
+				}
 			},
 			{
 				"command": "extension.exercism.submit",
-				"title": "Exercism: Submit current exercise"
+				"title": "Exercism: Submit current exercise",
+				"icon": {
+					"light": "./media/upload-light.svg",
+					"dark": "./media/upload-dark.svg"
+				}
 			},
 			{
 				"command": "extension.exercism.open",
@@ -44,8 +53,27 @@
 				"exercism.app.path": {
 					"type": "string",
 					"description": "exercism client app path"
+				},
+				"exercism.showButtons": {
+					"type": "boolean",
+					"default": true,
+					"description": "Display buttons"
 				}
 			}
+		},
+		"menus": {
+			"editor/title": [
+				{
+					"command": "extension.exercism.fetch",
+					"when": "exercism:showButtons",
+					"group": "navigation"
+				},
+				{
+					"command": "extension.exercism.submit",
+					"when": "exercism:isValidWorkspace",
+					"group": "navigation"
+				}
+			]
 		}
 	},
 	"scripts": {

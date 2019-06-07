@@ -5,10 +5,10 @@ export const showInputBox = (opts: vscode.InputBoxOptions) => {
 		vscode.window.showInputBox(opts)
 			.then(r => {
 				if (r) {
-					resolve(r)
+					resolve(r);
 				}
 				else {
-					reject()
+					reject();
 				}
 			});
 	});

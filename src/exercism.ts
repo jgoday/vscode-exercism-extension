@@ -1,4 +1,4 @@
-import { fileExists, getUserHome, resolvePath, programExistsInPath } from './file-utils';
+import { fileExists, fileExistsSync, getUserHome, resolvePath, programExistsInPath } from './file-utils';
 import { executeProgramR, executeProgram, isWindows } from './exec-utils';
 
 export interface IEnviroment {
@@ -53,8 +53,9 @@ export const getExercismAppPath = async (conf: IEnviroment) => {
 };
 
 export const workspaceHasExercismMetadata = (_: IEnviroment, workspace: string) => {
-    return fileExists(workspace);
-}
+    console.log('workspace exists', workspace);
+    return fileExistsSync(workspace);
+};
 
 export const getExercismConfigPath = async (env: IEnviroment, apppath: string) => {
 	try {
@@ -78,12 +79,13 @@ export const requestToken = async (env: IEnviroment, apppath: string) => {
 	const home = getUserHome();
 	const r = await executeProgram(`${apppath} configure -t ${token} -w ${home}/Exercism`);
 	return r;
-}
+};
 
 export const ensureToken = async (env: IEnviroment, apppath: string) => {
 	const path = await getExercismConfigPath(env, apppath);
 	const userConfigFile = `${path}/user.json`;
-	const exist = await fileExists(userConfigFile)
+    const exist = await fileExists(userConfigFile);
+
 	if (path && exist) {
 		const config = require(userConfigFile);
 
@@ -96,4 +98,4 @@ export const ensureToken = async (env: IEnviroment, apppath: string) => {
 	}
 
 	return true;
-}
+};

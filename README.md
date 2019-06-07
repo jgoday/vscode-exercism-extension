@@ -24,6 +24,8 @@ This extension contributes the following settings:
 
 * `exercism.app.path`: Route of exercism client program
 
+* `exercism.showButtons`: Show fetch and submit buttons
+
 ## Known Issues
 
 
@@ -31,7 +33,7 @@ This extension contributes the following settings:
 
 ### 0.0.2
 
-Search exercism program on current path.
+Search exercism program on current path and configure buttons.
 
 ### 0.0.1
 
