@@ -35,6 +35,10 @@ This extension contributes the following settings:
 
 Search exercism program on current path and configure buttons.
 
+Add ability to write exercise name with spaces (@kerolloz)
+
+Ask track name and then the exercise name instead of separated by slashes (@kerolloz)
+
 ### 0.0.1
 
 Initial release
