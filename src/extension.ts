@@ -42,10 +42,15 @@ export function activate(context: vscode.ExtensionContext) {
 		const exercismApp = await env.run(getExercismAppPath);
 
 		if (exercismApp && await env.run(ensureToken, exercismApp)) {
-			const exerciseName = await showInputBox({
-				placeHolder: 'Track/Exercise name'
+			const track = await showInputBox({
+				placeHolder: 'Track name'
 			});
-			const [track, name] = exerciseName.split('/');
+			const name = (await showInputBox({
+				placeHolder: 'Exercise name'
+			}))
+			.toLowerCase()
+			.replace(' ', '-');
+			
 			vscode.window.withProgress({
 				location: vscode.ProgressLocation.Notification,
 				title: `Downloading exercise ${name}`
