@@ -49,6 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
 				placeHolder: 'Exercise name'
 			}))
 			.toLowerCase()
+			.trim()
 			.replace(' ', '-');
 			
 			vscode.window.withProgress({
