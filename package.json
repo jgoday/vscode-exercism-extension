@@ -2,7 +2,7 @@
 	"name": "exercism",
 	"displayName": "exercism",
 	"description": "Exercism integration",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "jgoday",
 	"icon": "images/exercism.png",
 	"homepage": "https://github.com/jgoday/vscode-exercism-extension/blob/master/README.md",
@@ -36,6 +36,7 @@
 			{
 				"command": "extension.exercism.submit",
 				"title": "Exercism: Submit current exercise",
+				"when": "exercism:isValidWorkspace",
 				"icon": {
 					"light": "./media/upload-light.svg",
 					"dark": "./media/upload-dark.svg"

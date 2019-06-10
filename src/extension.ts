@@ -22,8 +22,11 @@ export function activate(context: vscode.ExtensionContext) {
 	const updateContext = () => {
 		try {
 			const currentWorkspaces = (vscode.workspace.workspaceFolders || [])
-				.filter(w => env.run(workspaceHasExercismMetadata, w.uri.fsPath));
+				.filter(w => env.run(
+						workspaceHasExercismMetadata,
+						w.uri.fsPath) === true);
 			const showButtons = vscode.workspace.getConfiguration('exercism').get('showButtons', true);
+
 			vscode.commands.executeCommand(
 				'setContext',
 				'exercism:showButtons',
@@ -50,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}))
 			.toLowerCase()
 			.replace(' ', '-');
-			
+
 			vscode.window.withProgress({
 				location: vscode.ProgressLocation.Notification,
 				title: `Downloading exercise ${name}`

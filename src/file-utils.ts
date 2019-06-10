@@ -3,6 +3,8 @@ import * as path from 'path';
 import { homedir } from 'os';
 import { executeProgramR, isWindows } from './exec-utils';
 
+export const join = path.join;
+
 export const fileExistsSync = fs.existsSync;
 
 export const fileExists = (filepath: string) => {

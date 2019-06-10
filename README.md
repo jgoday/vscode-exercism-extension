@@ -31,6 +31,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.3
+
+Fix images
+
 ### 0.0.2
 
 Search exercism program on current path and configure buttons.

@@ -1,4 +1,4 @@
-import { fileExists, fileExistsSync, getUserHome, resolvePath, programExistsInPath } from './file-utils';
+import { join, fileExists, fileExistsSync, getUserHome, resolvePath, programExistsInPath } from './file-utils';
 import { executeProgramR, executeProgram, isWindows } from './exec-utils';
 
 export interface IEnviroment {
@@ -15,7 +15,7 @@ export class Reader<T> {
 
     public constructor(private value: T) {}
 
-    public async run<A>(fn: (_: T, ...args: any) => A, ...args: any) {
+    public run<A>(fn: (_: T, ...args: any) => A, ...args: any) {
         return fn(this.value, ...args);
     }
 }
@@ -53,8 +53,7 @@ export const getExercismAppPath = async (conf: IEnviroment) => {
 };
 
 export const workspaceHasExercismMetadata = (_: IEnviroment, workspace: string) => {
-    console.log('workspace exists', workspace);
-    return fileExistsSync(workspace);
+    return fileExistsSync(join(workspace, '.exercism'));
 };
 
 export const getExercismConfigPath = async (env: IEnviroment, apppath: string) => {
