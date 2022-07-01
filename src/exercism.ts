@@ -65,7 +65,7 @@ export const getExercismConfigPath = async (env: IEnviroment, apppath: string) =
 		return dir;
 	}
 	catch (e) {
-		env.showError(e);
+		env.showError(String(e));
 		return undefined;
 	}
 }
