@@ -24,7 +24,7 @@ export const getExercismAppPath = async (conf: IEnviroment) => {
     const exercismApp = conf.get<string>('app.path');
     if (!exercismApp) {
         // search in current path
-        const defaultAppName = isWindows
+        const defaultAppName = isWindows()
             ? 'exercism.exe'
             : 'exercism';
         const defaultAppPath = await programExistsInPath(defaultAppName);
