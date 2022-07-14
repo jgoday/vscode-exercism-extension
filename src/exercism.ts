@@ -24,7 +24,7 @@ export const getExercismAppPath = async (conf: IEnviroment) => {
     const exercismApp = conf.get<string>('app.path');
     if (!exercismApp) {
         // search in current path
-        const defaultAppName = isWindows
+        const defaultAppName = isWindows()
             ? 'exercism.exe'
             : 'exercism';
         const defaultAppPath = await programExistsInPath(defaultAppName);
@@ -65,7 +65,7 @@ export const getExercismConfigPath = async (env: IEnviroment, apppath: string) =
 		return dir;
 	}
 	catch (e) {
-		env.showError(e);
+		env.showError(String(e));
 		return undefined;
 	}
 }

@@ -120,15 +120,9 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	vscode.workspace.onDidChangeWorkspaceFolders(_ => {
-		updateContext();
-	});
-	vscode.workspace.onDidChangeConfiguration(_ => {
-		updateContext();
-	});
-	vscode.workspace.onDidOpenTextDocument(_ => {
-		updateContext();
-	});
+	vscode.workspace.onDidChangeWorkspaceFolders(updateContext);
+	vscode.workspace.onDidChangeConfiguration(updateContext);
+	vscode.workspace.onDidOpenTextDocument(updateContext);
 
 	context.subscriptions.push(fetchCommand);
 	context.subscriptions.push(submitCommand);
